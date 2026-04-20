@@ -1,0 +1,25 @@
+@use 'sass:map';
+
+$breakpoints: (
+    sm: 768px,
+    md: 1024px,
+    lg: 1280px,
+);
+/**
+ * Mobile-first media query helper
+ * Wraps content in a min-width query based on `$breakpoints`
+ *
+ * @param {string} $breakpoint - Key from `$breakpoints` (sm, md, lg)
+ * @error If breakpoint is not found
+ */
+@mixin respond-up($breakpoint) {
+    $value: map.get($breakpoints, $breakpoint);
+
+    @if $value {
+        @media (min-width: $value) {
+            @content;
+        }
+    } @else {
+        @error "Breakpoint '#{$breakpoint}' not found.";
+    }
+}

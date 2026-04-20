@@ -1,10 +1,13 @@
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HomePage } from './src/pages/home/HomePage.tsx';
 
 function App() {
     return (
-        <>
-            <section id='center'></section>
-        </>
+        <BrowserRouter>
+            <Routes>
+                <Route path='/' element={<HomePage />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 

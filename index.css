@@ -1,0 +1,26 @@
+@import './src/styles/tokens.scss';
+@import './src/styles/reset.scss';
+@import './src/styles/objects.scss';
+@import './src/styles/components.scss';
+@import './src/styles/fonts.scss';
+
+body {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
+
+    min-height: 100vh;
+
+    min-height: 100svh;
+    background: var(--color-bg);
+    overflow-x: hidden;
+
+    color: var(--color-white);
+    font-family: var(--font-family-body);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased; /* reduces font thickness and makes text appear smoother  */
+    font-feature-settings:
+        'cv11', 'ss01'; /* enables specific OpenType stylistic features (character variants / stylistic sets) depending on font support */
+    text-rendering: optimizeLegibility; /* enables advanced text rendering (kerning, ligatures) for better readability, especially on larger text */
+}

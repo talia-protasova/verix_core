@@ -1,0 +1,136 @@
+@use './mixins' as *;
+
+:root {
+    // ================= COLORS =================
+
+    // base
+    --color-bg: oklch(11.703% 0.00887 284.935);
+    --color-bg-2: oklch(13.901% 0.01775 283.85);
+
+    // surfaces
+    --color-bg-card: oklch(100% 0.00011 271.152 / 0.03);
+    --color-bg-card-hover: oklch(100% 0.00011 271.152 / 0.06);
+    --color-surface-glass: rgba(255, 255, 255, 0.04);
+
+    // borders
+    --color-border: oklch(100% 0.00011 271.152 / 0.07);
+    --color-border-bright: rgba(255, 255, 255, 0.15);
+
+    // text
+    --color-white: oklch(100% 0.00011 271.152);
+    --color-white-80: oklch(100% 0.00011 271.152 / 0.8);
+    --color-white-60: oklch(100% 0.00011 271.152 / 0.6);
+    --color-white-30: oklch(100% 0.00011 271.152 / 0.3);
+    --color-text-muted: oklch(100% 0.00011 271.152 / 0.8);
+
+    // overlays
+    --color-overlay: rgba(5, 5, 8, 0.9);
+    --color-overlay-soft: rgba(5, 5, 8, 0.85);
+
+    // ================= GRADIENTS =================
+
+    --grad-pink: #e040fb;
+    --grad-violet: #7c3aed;
+    --grad-blue: #3b82f6;
+    --grad-cyan: #06b6d4;
+
+    --gradient-brand: linear-gradient(
+        135deg,
+        var(--grad-pink) 0%,
+        var(--grad-violet) 35%,
+        var(--grad-blue) 65%,
+        var(--grad-cyan) 100%
+    );
+
+    --gradient-text: linear-gradient(
+        90deg,
+        var(--grad-pink) 0%,
+        var(--grad-blue) 50%,
+        var(--grad-cyan) 100%
+    );
+
+    --gradient-glow: radial-gradient(
+        ellipse 60% 40% at 50% 50%,
+        rgba(124, 58, 237, 0.25) 0%,
+        transparent 70%
+    );
+
+    // ================= TYPOGRAPHY =================
+
+    // font families
+    --font-family-display: 'Space Grotesk', sans-serif;
+    --font-family-body: 'Inter', sans-serif;
+
+    // font sizes (fluid)
+    --text-xs: clamp(0.75rem, 0.7rem + 0.2vw, 0.875rem);
+    --text-sm: clamp(0.875rem, 0.8rem + 0.4vw, 1rem);
+    --text-md: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
+    --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+    --text-2xl: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    --text-3xl: clamp(2rem, 1.5rem + 1.5vw, 2.5rem);
+    --text-4xl: clamp(2.25rem, 2rem + 1.2vw, 3rem);
+    --text-5xl: clamp(3rem, 2.2rem + 3vw, 4rem);
+
+    // text roles
+    --font-body: var(--text-md);
+    --font-body-sm: var(--text-sm);
+    --font-label: var(--text-sm);
+    --font-caption: var(--text-xs);
+    --font-heading-sm: var(--text-xl);
+    --font-heading-md: var(--text-2xl);
+    --font-heading-lg: var(--text-4xl);
+    --font-heading-xl: var(--text-5xl);
+
+    // line height
+    --leading-tight: 1.2;
+    --leading-normal: 1.5;
+    --leading-relaxed: 1.7;
+
+    // ================= SPACING =================
+
+    // scale (4px base)
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-10: 2.5rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-20: 5rem;
+    --space-24: 6rem;
+
+    // ================= LAYOUT =================
+
+    // semantic paddings (mobile)
+    --container-padding-x: var(--space-4);
+    --section-padding-y: var(--space-16);
+
+    --header-padding-x: var(--space-4);
+    --header-padding-y: var(--space-4);
+
+    // element sizes
+    --container-max-width: 1200px;
+}
+
+// ================= BREAKPOINTS =================
+
+// tablet
+@include respond-up(md) {
+    :root {
+        --container-padding-x: var(--space-6);
+        --section-padding-y: var(--space-20);
+        --header-padding-x: var(--space-6);
+    }
+}
+
+// desktop
+@include respond-up(lg) {
+    :root {
+        --container-padding-x: var(--space-10);
+        --section-padding-y: var(--space-24);
+        --header-padding-x: var(--space-10);
+    }
+}
