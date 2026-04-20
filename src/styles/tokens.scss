@@ -55,6 +55,8 @@
         transparent 70%
     );
 
+    --ghost-bg: oklch(100% 0.00011 271.152 / 0.05);
+
     // ================= TYPOGRAPHY =================
 
     // font families
@@ -102,6 +104,36 @@
     --space-20: 5rem;
     --space-24: 6rem;
 
+    // ================= RADIUS =================
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 999px;
+    --radius-full: 50%;
+
+    // ================= BLUR / OVERLAY =================
+    --blur-glass: 4px;
+    --overlay-dark: oklch(0% 0 0 / 0.2);
+    --overlay-dark-heavy: oklch(0% 0 0 / 0.37);
+    --blur-header: 8px;
+    --blur-mobile-menu: 1.25rem;
+
+    // ================= BORDERS =================
+    --border-glass: 1px solid oklch(100% 0.00011 271.152 / 0.1);
+    --border-bright-sm: 1px solid var(--color-border-bright);
+    --border-header-bottom: 1px solid oklch(100% 0.00011 271.152 / 0.05);
+
+    // ================= SHADOWS =================
+    --shadow-glass: 0 8px 32px 0 oklch(0% 0 0 / 0.37);
+    --shadow-brand-glow: 0 0 1.5rem oklch(54.134% 0.24669 293.012 / 0.35);
+
+    // ================= ANIMATION =================
+    --duration-fast: 0.3s;
+    --duration-normal: 0.4s;
+    --duration-slow: 0.6s;
+    --ease-default: ease;
+
     // ================= LAYOUT =================
 
     // semantic paddings (mobile)
@@ -113,6 +145,12 @@
 
     // element sizes
     --container-max-width: 1200px;
+    --content-max-width-hero: 800px;
+    --icon-size-sm: 1.25rem;
+    --burger-size: 2rem;
+    --burger-gap: 0.375rem;
+    --burger-line-h: 0.125rem;
+    --hero-dot-size: 0.375rem;
 }
 
 // ================= BREAKPOINTS =================

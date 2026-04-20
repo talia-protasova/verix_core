@@ -1,0 +1,18 @@
+.hero-visual {
+    position: relative;
+
+    width: 100%;
+    overflow: hidden;
+}
+
+.hero-visual__inner {
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+}
+
+.hero-visual__svg {
+    width: 100%;
+    height: auto;
+}

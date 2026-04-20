@@ -48,6 +48,6 @@ svg {
 
 a:focus-visible,
 button:focus-visible {
-    outline: 2px solid #f26928;
+    outline: 2px solid var(--grad-violet);
     outline-offset: 2px;
 }

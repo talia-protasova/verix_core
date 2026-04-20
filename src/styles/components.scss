@@ -3,11 +3,12 @@
     align-items: center;
     justify-content: center;
 
-    padding: 12px 24px;
-    border-radius: 100px;
+    padding-block: var(--space-3);
+    padding-inline: var(--space-6);
+    border-radius: var(--radius-xl);
 
     font-family: var(--font-family-display);
-    font-size: 14px;
+    font-size: var(--text-xs);
     font-weight: 600;
 
     transition: all 0.2s ease;
@@ -19,7 +20,7 @@
 }
 
 .button--ghost {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--ghost-bg);
     color: var(--color-white);
     border: 1px solid var(--color-border-bright);
 }
