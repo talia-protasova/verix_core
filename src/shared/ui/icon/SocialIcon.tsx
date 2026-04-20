@@ -8,7 +8,7 @@ export const SocialIcon = ({ name, className, label }: IconProps) => {
             aria-label={label}
             focusable='false'
         >
-            <use href={`/assets/sprite.svg#${name}`} />
+            <use href={`${import.meta.env.BASE_URL}assets/sprite.svg#${name}`} />
         </svg>
     );
 };
