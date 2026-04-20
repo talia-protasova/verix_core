@@ -1,5 +1,6 @@
 import './header.scss';
-import { NAV_LINKS, SOCIAL_LINKS } from './header.model';
+import { NAV_LINKS } from '../../app/core/data';
+import { SOCIAL_LINKS } from '../../app/core/data';
 import { NavLink } from 'react-router-dom';
 import { SocialIcon } from '../../shared/ui/icon/SocialIcon';
 
@@ -15,7 +16,7 @@ export const Header = () => {
     return (
         <header className='header'>
             <div className='header__container'>
-                <div className='header__logo'>Verix Core</div>
+                <div className='header__logo text-gradient'>Verix Core</div>
 
                 <nav className='header__nav' aria-label='Main navigation'>
                     <ul className='header__menu'>

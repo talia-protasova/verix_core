@@ -3,6 +3,7 @@
 @import './src/styles/objects.scss';
 @import './src/styles/components.scss';
 @import './src/styles/fonts.scss';
+@import './src/styles/utilities.scss';
 
 body {
     display: grid;

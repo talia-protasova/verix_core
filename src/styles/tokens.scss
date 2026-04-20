@@ -24,15 +24,15 @@
     --color-text-muted: oklch(100% 0.00011 271.152 / 0.8);
 
     // overlays
-    --color-overlay: rgba(5, 5, 8, 0.9);
-    --color-overlay-soft: rgba(5, 5, 8, 0.85);
+    --color-overlay: oklch(11.703% 0.00887 284.935 / 0.9);
+    --color-overlay-soft: oklch(11.703% 0.00887 284.935 / 0.85);
 
     // ================= GRADIENTS =================
 
-    --grad-pink: #e040fb;
-    --grad-violet: #7c3aed;
-    --grad-blue: #3b82f6;
-    --grad-cyan: #06b6d4;
+    --grad-pink: oklch(67.859% 0.27742 321.359);
+    --grad-violet: oklch(54.134% 0.24669 293.012);
+    --grad-blue: oklch(62.31% 0.1881 259.83);
+    --grad-cyan: oklch(71.485% 0.12578 215.256);
 
     --gradient-brand: linear-gradient(
         135deg,
@@ -51,7 +51,7 @@
 
     --gradient-glow: radial-gradient(
         ellipse 60% 40% at 50% 50%,
-        rgba(124, 58, 237, 0.25) 0%,
+        oklch(54.134% 0.24669 293.012 / 0.25) 0%,
         transparent 70%
     );
 
