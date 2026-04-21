@@ -4,6 +4,7 @@
 @import './src/styles/components.scss';
 @import './src/styles/fonts.scss';
 @import './src/styles/utilities.scss';
+@import './src/styles/primitives.scss';
 
 body {
     display: grid;

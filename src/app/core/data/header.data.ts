@@ -1,7 +1,8 @@
 export const NAV_LINKS = [
-    { id: 'contracts', label: 'Smart Contracts', href: '#contracts' },
-    { id: 'services', label: 'Services', href: '#services' },
-    { id: 'solutions', label: 'Solutions', href: '#solutions' },
+    { id: 'metrics', label: 'Platform Metrics', href: '#metrics' },
+    { id: 'features', label: 'Features', href: '#features' },
     { id: 'roadmap', label: 'Roadmap', href: '#roadmap' },
-    { id: 'whitepaper', label: 'Whitepaper', href: '#whitepaper' },
+    { id: 'ecosystem', label: 'Ecosystem', href: '#ecosystem' },
+    { id: 'team', label: 'Team', href: '#team' },
+    { id: 'cta', label: 'Conact', href: '#cta' },
 ];
