@@ -30,6 +30,8 @@ export const HeroVisual: React.FC = () => {
         const svg = svgRef.current;
         if (!svg) return;
 
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
         // Bind DOM elements to their corresponding data for direct manipulation in rAF
         const nodesData: NodeData[] = Array.from(
             svg.querySelectorAll<SVGCircleElement>('.net-node'),
@@ -37,63 +39,79 @@ export const HeroVisual: React.FC = () => {
             el,
             baseX: points[i].x,
             baseY: points[i].y,
-            x: points[i].x,
-            y: points[i].y,
+            currX: points[i].x,
+            currY: points[i].y,
             phase: points[i].phase,
             glowPhase: Math.random() * Math.PI * 2,
         }));
 
+        // Map edges to node indices
         const edgesData: EdgeData[] = Array.from(
             svg.querySelectorAll<SVGPathElement>('.net-edge'),
-        ).map((el) => {
-            const u = parseInt(el.getAttribute('data-u') || '0', 10);
-            const v = parseInt(el.getAttribute('data-v') || '0', 10);
-            return { el, u, v };
-        });
+        ).map((el) => ({
+            el,
+            u: Number(el.dataset.u),
+            v: Number(el.dataset.v),
+        }));
 
-        let animationFrameId: number;
+        // Render static state if user prefers reduced motion
+        const renderStatic = () => {
+            nodesData.forEach((node) => {
+                node.el.setAttribute('cx', `${node.baseX}`);
+                node.el.setAttribute('cy', `${node.baseY}`);
+                node.el.setAttribute('r', '2.5');
+                node.el.setAttribute('opacity', '0.8');
+            });
+
+            edgesData.forEach((edge) => {
+                const from = nodesData[edge.u];
+                const to = nodesData[edge.v];
+
+                edge.el.setAttribute('d', `M${from.baseX},${from.baseY} L${to.baseX},${to.baseY}`);
+            });
+        };
+
+        if (prefersReducedMotion.matches) {
+            renderStatic();
+            return;
+        }
+
+        let frameId: number;
 
         const animate = (time: number) => {
             // Animate each node: floating movement + glow pulse
             nodesData.forEach((node) => {
-                // Lissajous-like offset so each node moves independently
                 node.currX = node.baseX + Math.sin(time * SPEED + node.phase) * AMPLITUDE;
+
                 node.currY = node.baseY + Math.cos(time * SPEED * 1.3 + node.phase) * AMPLITUDE;
 
-                node.el.setAttribute('cx', node.currX.toString());
-                node.el.setAttribute('cy', node.currY.toString());
+                node.el.setAttribute('cx', `${node.currX}`);
+                node.el.setAttribute('cy', `${node.currY}`);
 
-                // Pulse radius and opacity to simulate a soft glow effect
                 const glow = (Math.sin(time * 0.003 + node.glowPhase) + 1) / 2;
+
                 const radius = 1.2 + glow * 1.5;
                 const opacity = 0.3 + glow * 0.5;
 
-                node.el.setAttribute('r', radius.toString());
-                node.el.setAttribute('opacity', opacity.toString());
+                node.el.setAttribute('r', `${radius}`);
+                node.el.setAttribute('opacity', `${opacity}`);
             });
 
             // Redraw edges to follow their connected nodes each frame
             edgesData.forEach((edge) => {
-                const u = nodesData[edge.u];
-                const v = nodesData[edge.v];
+                const from = nodesData[edge.u];
+                const to = nodesData[edge.v];
 
-                if (
-                    u.currX !== undefined &&
-                    u.currY !== undefined &&
-                    v.currX !== undefined &&
-                    v.currY !== undefined
-                ) {
-                    edge.el.setAttribute('d', `M${u.currX},${u.currY} L${v.currX},${v.currY}`);
-                }
+                edge.el.setAttribute('d', `M${from.currX},${from.currY} L${to.currX},${to.currY}`);
             });
 
-            animationFrameId = requestAnimationFrame(animate);
+            frameId = requestAnimationFrame(animate);
         };
 
-        animationFrameId = requestAnimationFrame(animate);
+        frameId = requestAnimationFrame(animate);
 
         // Cleanup on unmount to prevent memory leaks
-        return () => cancelAnimationFrame(animationFrameId);
+        return () => cancelAnimationFrame(frameId);
     }, [points]);
 
     return (

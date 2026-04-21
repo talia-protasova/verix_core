@@ -56,9 +56,13 @@
 
     transition: all var(--duration-normal) var(--ease-default);
 }
-
+.header__link--active {
+    color: var(--color-white);
+    font-weight: 500;
+}
 .header__link:hover {
     color: var(--color-white);
+    font-weight: 500;
 }
 
 .header__right {
