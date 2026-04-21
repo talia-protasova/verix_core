@@ -1,0 +1,25 @@
+.section-eyebrow {
+    display: block;
+
+    margin-block-end: var(--space-3);
+
+    font-family: var(--font-family-body);
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--section-eyebrow-color);
+}
+
+.section-title {
+    font-family: var(--font-family-display);
+    font-size: var(--font-heading-xl);
+    line-height: var(--leading-tight);
+    text-align: center;
+    letter-spacing: -0.02em;
+
+    color: var(--color-white);
+}
+.section-title--accent {
+    display: block;
+}

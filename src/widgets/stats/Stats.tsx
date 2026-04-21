@@ -5,7 +5,7 @@ import './stats.scss';
 
 export const Stats = () => {
     return (
-        <section className='stats' aria-label='Platform statistics' id='contracts'>
+        <section className='stats' aria-label='Platform statistics' id='metrics'>
             <h2 className='sr-only'>Platform metrics</h2>
             <div className='stats__container'>
                 <ul className='stats__grid'>
