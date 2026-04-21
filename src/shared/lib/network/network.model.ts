@@ -4,12 +4,13 @@ export interface Point {
     phase: number;
 }
 
-export interface NodeData extends Point {
+export interface NodeData {
     el: SVGCircleElement;
     baseX: number;
     baseY: number;
-    currX?: number;
-    currY?: number;
+    currX: number;
+    currY: number;
+    phase: number;
     glowPhase: number;
 }
 
