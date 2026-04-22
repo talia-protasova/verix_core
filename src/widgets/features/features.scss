@@ -56,21 +56,6 @@
 
     overflow: hidden;
 
-    &::before {
-        content: '';
-
-        position: absolute;
-        inset-inline: 0;
-        inset-block-start: 0;
-
-        height: 1px;
-
-        background: var(--gradient-brand);
-        opacity: 0;
-
-        transition: opacity var(--duration-normal);
-    }
-
     &::after {
         content: '';
 
@@ -91,10 +76,6 @@
         box-shadow: var(--shadow-glass);
 
         transform: translateY(-6px);
-    }
-
-    &:hover::before {
-        opacity: 1;
     }
 
     &:hover::after {

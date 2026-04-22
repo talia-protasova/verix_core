@@ -28,6 +28,9 @@
     --color-overlay-soft: oklch(11.703% 0.00887 284.935 / 0.85);
 
     // ================= GRADIENTS =================
+    --color-cyan-85: oklch(71.485% 0.12578 215.256 / 0.85);
+    --color-cyan-60: oklch(71.485% 0.12578 215.256 / 0.6);
+    --color-cyan-0: oklch(71.485% 0.12578 215.256 / 0);
 
     --grad-pink: oklch(67.859% 0.27742 321.359);
     --grad-violet: oklch(54.134% 0.24669 293.012);
@@ -129,6 +132,10 @@
     // ================= SHADOWS =================
     --shadow-glass: 0 8px 32px 0 oklch(0% 0 0 / 0.37);
     --shadow-brand-glow: 0 0 1.5rem oklch(54.134% 0.24669 293.012 / 0.35);
+    --shadow-dot-glow: 0 0 0.625rem var(--color-cyan-85);
+    --shadow-dot-pulse-start: 0 0 0 0 var(--color-cyan-60);
+    --shadow-dot-pulse-end: 0 0 0 0.625rem var(--color-cyan-0);
+    --shadow-roadmap-path: 0 0 0.375rem oklch(54.134% 0.24669 293.012 / 0.65);
 
     // ================= ANIMATION =================
     --duration-fast: 0.3s;
@@ -154,6 +161,7 @@
     --burger-line-h: 0.125rem;
     --hero-dot-size: 0.375rem;
     --feature-icon-size: 3.25rem;
+    --size-dot: 0.625rem;
 }
 
 // ================= BREAKPOINTS =================
