@@ -38,7 +38,7 @@
     flex-direction: column;
     gap: var(--space-8);
 
-    padding: var(--space-10);
+    padding: var(--space-6);
 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-xl);
@@ -69,6 +69,12 @@
 
     &:hover::before {
         opacity: 0.25;
+    }
+}
+
+@include respond-up(md) {
+    .ecosystem__layer-card {
+        padding: var(--space-10);
     }
 }
 

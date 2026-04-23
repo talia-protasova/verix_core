@@ -5,7 +5,6 @@ import { Features } from '../../widgets/features/Features';
 import { Roadmap } from '../../widgets/roadmap/Roadmap';
 import { Ecosystem } from '../../widgets/ecosystem/Ecosystem';
 import { Team } from '../../widgets/team/Team';
-import { Faq } from '../../widgets/faq/Faq';
 import { Cta } from '../../widgets/cta/Cta';
 import { Footer } from '../../widgets/footer/Footer';
 
@@ -20,7 +19,6 @@ export const HomePage = () => {
                 <Roadmap />
                 <Ecosystem />
                 <Team />
-                <Faq />
                 <Cta />
             </main>
             <Footer />

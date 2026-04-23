@@ -1,0 +1,222 @@
+@use '../../styles/mixins' as *;
+
+.team {
+    padding-block: var(--section-padding-y);
+}
+
+.team__header {
+    margin-block-end: var(--space-12);
+
+    text-align: center;
+}
+
+.team__list {
+    display: grid;
+    align-items: stretch;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-6);
+
+    padding: 0;
+    margin: 0;
+}
+
+@include respond-up(md) {
+    .team__list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.team__item {
+    display: flex;
+
+    width: 100%;
+
+    list-style: none;
+}
+
+.team__item--loaded {
+    opacity: 0;
+
+    transform: translateY(20px) scale(0.98);
+}
+
+.team__item--loaded.team__item--visible {
+    animation: teamFadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    animation-delay: var(--team-delay, 0s);
+}
+
+.team__card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+
+    width: 100%;
+    min-height: 20rem;
+    height: 100%;
+
+    padding: var(--space-6);
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    background: var(--color-bg-card);
+
+    text-align: center;
+
+    transition:
+        transform var(--duration-fast) var(--ease-default),
+        border-color var(--duration-fast) var(--ease-default),
+        background var(--duration-fast) var(--ease-default),
+        box-shadow var(--duration-fast) var(--ease-default);
+}
+
+.team__card:hover:not(.is-loading) {
+    transform: translateY(-4px);
+    border-color: var(--color-border-bright);
+    background: var(--color-bg-card-hover);
+    box-shadow: var(--shadow-glass);
+}
+
+.team__card:hover:not(.is-loading) .team__avatar-img {
+    filter: grayscale(0);
+}
+
+.team__card.is-loading {
+    pointer-events: none;
+}
+
+.team__card.is-loading .team__avatar,
+.team__card.is-loading .team__name,
+.team__card.is-loading .team__role,
+.team__card.is-loading .team__bio {
+    position: relative;
+
+    overflow: hidden;
+    background-color: var(--ghost-bg);
+    border-radius: var(--radius-md);
+}
+
+.team__card.is-loading .team__avatar::after,
+.team__card.is-loading .team__name::after,
+.team__card.is-loading .team__role::after,
+.team__card.is-loading .team__bio::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+
+    transform: translateX(-100%);
+    animation: shimmer 1.5s infinite;
+}
+
+.team__card.is-loading .team__avatar {
+    margin-block-end: var(--space-4);
+
+    width: var(--team-avatar-size);
+    height: var(--team-avatar-size);
+    border-radius: var(--radius-full);
+}
+
+.team__card.is-loading .team__name {
+    width: 8.75rem;
+    height: 1.5rem;
+
+    margin-block-end: var(--space-2);
+}
+
+.team__card.is-loading .team__role {
+    width: 6.25rem;
+    height: 1rem;
+
+    margin-block-end: var(--space-4);
+}
+
+.team__card.is-loading .team__bio {
+    width: 100%;
+    height: 5rem;
+}
+
+.team__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    width: var(--team-avatar-size);
+    height: var(--team-avatar-size);
+
+    margin-block-end: var(--space-4);
+}
+
+.team__avatar-img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background: var(--ghost-bg);
+    filter: grayscale(1);
+
+    transition: filter var(--duration-fast) var(--ease-default);
+}
+
+.team__content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+}
+
+.team__name {
+    margin-block-end: var(--space-1);
+
+    min-height: 1.2em;
+
+    font-family: var(--font-family-display);
+    font-size: var(--font-heading-sm);
+    color: var(--color-white);
+}
+
+.team__role {
+    margin-block-end: var(--space-3);
+
+    min-height: 1em;
+
+    font-size: var(--font-caption);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-cyan-85);
+}
+
+.team__bio {
+    min-height: 3em;
+
+    font-size: var(--font-body-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-white-80);
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes teamFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

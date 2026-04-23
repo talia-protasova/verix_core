@@ -4,5 +4,5 @@ export const NAV_LINKS = [
     { id: 'roadmap', label: 'Roadmap', href: '#roadmap' },
     { id: 'ecosystem', label: 'Ecosystem', href: '#ecosystem' },
     { id: 'team', label: 'Team', href: '#team' },
-    { id: 'cta', label: 'Conact', href: '#cta' },
+    { id: 'cta', label: 'Contact', href: '#cta' },
 ];

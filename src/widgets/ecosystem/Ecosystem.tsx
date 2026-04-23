@@ -27,7 +27,7 @@ export const Ecosystem: React.FC = () => {
     };
 
     return (
-        <section className='ecosystem' aria-labelledby='ecosystem-title'>
+        <section className='ecosystem' aria-labelledby='ecosystem-title' id='ecosystem'>
             <div className='ecosystem__container container'>
                 <header className='ecosystem__header'>
                     <h2 className='section-eyebrow'>Ecosystem</h2>
