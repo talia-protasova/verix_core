@@ -106,10 +106,3 @@
         box-shadow var(--duration-fast),
         border-color var(--duration-fast);
 }
-
-.features__card:hover .features__icon {
-    border-color: var(--color-border-bright);
-    box-shadow: var(--shadow-brand-glow);
-
-    transform: scale(1.05);
-}
