@@ -48,76 +48,87 @@ export const NeuralNetwork: React.FC<GenerativeIconProps> = ({
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        const dpr = window.devicePixelRatio || 1;
+        const startAnimation = () => {
+            const dpr = window.devicePixelRatio || 1;
 
-        // scale canvas for retina displays
-        const setupCanvas = () => {
+            // scale canvas for retina displays
             canvas.width = size * dpr;
             canvas.height = size * dpr;
-
             ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-        };
 
-        setupCanvas();
+            const maxDistance = size * 0.3;
+            const nodes = nodesRef.current;
 
-        const maxDistance = size * 0.3;
-        const nodes = nodesRef.current;
+            const updateNode = (n: Node) => {
+                // update position
+                n.x += n.vx;
+                n.y += n.vy;
 
-        const updateNode = (n: Node) => {
-            // update position
-            n.x += n.vx;
-            n.y += n.vy;
+                // bounce from bounds
+                if (n.x < BOUNDS_PADDING || n.x > size - BOUNDS_PADDING) n.vx *= -1;
+                if (n.y < BOUNDS_PADDING || n.y > size - BOUNDS_PADDING) n.vy *= -1;
+            };
 
-            // bounce from bounds
-            if (n.x < BOUNDS_PADDING || n.x > size - BOUNDS_PADDING) n.vx *= -1;
-            if (n.y < BOUNDS_PADDING || n.y > size - BOUNDS_PADDING) n.vy *= -1;
-        };
+            const drawConnections = (n: Node, i: number) => {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const n2 = nodes[j];
 
-        const drawConnections = (n: Node, i: number) => {
-            for (let j = i + 1; j < nodes.length; j++) {
-                const n2 = nodes[j];
+                    const dx = n.x - n2.x;
+                    const dy = n.y - n2.y;
+                    const dist = Math.hypot(dx, dy);
 
-                const dx = n.x - n2.x;
-                const dy = n.y - n2.y;
-                const dist = Math.hypot(dx, dy);
+                    if (dist >= maxDistance) continue;
 
-                if (dist >= maxDistance) continue;
+                    const alpha = (1 - dist / maxDistance) * 0.5;
 
-                const alpha = (1 - dist / maxDistance) * 0.5;
+                    ctx.strokeStyle = fadeColor(color, alpha);
+                    ctx.lineWidth = EDGE_WIDTH;
 
-                ctx.strokeStyle = fadeColor(color, alpha);
-                ctx.lineWidth = EDGE_WIDTH;
+                    ctx.beginPath();
+                    ctx.moveTo(n.x, n.y);
+                    ctx.lineTo(n2.x, n2.y);
+                    ctx.stroke();
+                }
+            };
+
+            const drawNode = (n: Node) => {
+                ctx.fillStyle = fadeColor(color, 1);
 
                 ctx.beginPath();
-                ctx.moveTo(n.x, n.y);
-                ctx.lineTo(n2.x, n2.y);
-                ctx.stroke();
-            }
-        };
+                ctx.arc(n.x, n.y, NODE_RADIUS, 0, Math.PI * 2);
+                ctx.fill();
+            };
 
-        const drawNode = (n: Node) => {
-            ctx.fillStyle = fadeColor(color, 1);
+            const animate = () => {
+                ctx.clearRect(0, 0, size, size);
 
-            ctx.beginPath();
-            ctx.arc(n.x, n.y, NODE_RADIUS, 0, Math.PI * 2);
-            ctx.fill();
-        };
+                nodes.forEach((n, i) => {
+                    updateNode(n);
+                    drawConnections(n, i);
+                    drawNode(n);
+                });
 
-        const animate = () => {
-            ctx.clearRect(0, 0, size, size);
-
-            nodes.forEach((n, i) => {
-                updateNode(n);
-                drawConnections(n, i);
-                drawNode(n);
-            });
+                rafRef.current = requestAnimationFrame(animate);
+            };
 
             rafRef.current = requestAnimationFrame(animate);
         };
 
-        rafRef.current = requestAnimationFrame(animate);
+        // start only when canvas enters viewport
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    startAnimation();
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 },
+        );
+
+        observer.observe(canvas);
 
         return () => {
+            observer.disconnect();
             if (rafRef.current) cancelAnimationFrame(rafRef.current);
         };
     }, [size, color, animated]);

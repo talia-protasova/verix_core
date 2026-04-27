@@ -44,51 +44,66 @@ export const DataStream: React.FC<GenerativeIconProps> = ({
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        const dpr = window.devicePixelRatio || 1;
-
-        // scale canvas for retina displays
-        canvas.width = size * dpr;
-        canvas.height = size * dpr;
-
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
         let rafId: number;
 
-        const draw = () => {
-            // clear previous frame
-            ctx.clearRect(0, 0, size, size);
+        const startAnimation = () => {
+            const dpr = window.devicePixelRatio || 1;
 
-            linesRef.current.forEach((l) => {
-                // vertical gradient from transparent to solid
-                const gradient = ctx.createLinearGradient(0, l.y, 0, l.y + l.len);
+            // scale canvas for retina displays
+            canvas.width = size * dpr;
+            canvas.height = size * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-                gradient.addColorStop(0, withAlpha(color, 0));
-                gradient.addColorStop(1, withAlpha(color, 0.9));
+            const draw = () => {
+                ctx.clearRect(0, 0, size, size);
 
-                ctx.strokeStyle = gradient;
-                ctx.lineWidth = 2;
-                ctx.lineCap = 'round';
+                linesRef.current.forEach((l) => {
+                    // vertical gradient from transparent to solid
+                    const gradient = ctx.createLinearGradient(0, l.y, 0, l.y + l.len);
 
-                // draw single vertical line
-                ctx.beginPath();
-                ctx.moveTo(l.x, l.y);
-                ctx.lineTo(l.x, l.y + l.len);
-                ctx.stroke();
+                    gradient.addColorStop(0, withAlpha(color, 0));
+                    gradient.addColorStop(1, withAlpha(color, 0.9));
 
-                // move line down
-                l.y += l.speed;
+                    ctx.strokeStyle = gradient;
+                    ctx.lineWidth = 2;
+                    ctx.lineCap = 'round';
 
-                // loop back to top when out of bounds
-                if (l.y > size) l.y = -l.len;
-            });
+                    // draw single vertical line
+                    ctx.beginPath();
+                    ctx.moveTo(l.x, l.y);
+                    ctx.lineTo(l.x, l.y + l.len);
+                    ctx.stroke();
+
+                    // move line down
+                    l.y += l.speed;
+
+                    // loop back to top when out of bounds
+                    if (l.y > size) l.y = -l.len;
+                });
+
+                rafId = requestAnimationFrame(draw);
+            };
 
             rafId = requestAnimationFrame(draw);
         };
 
-        rafId = requestAnimationFrame(draw);
+        // start only when canvas enters viewport
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    startAnimation();
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 },
+        );
 
-        // stop animation on unmount
-        return () => cancelAnimationFrame(rafId);
+        observer.observe(canvas);
+
+        return () => {
+            observer.disconnect();
+            cancelAnimationFrame(rafId);
+        };
     }, [size, color, animated]);
 
     return (

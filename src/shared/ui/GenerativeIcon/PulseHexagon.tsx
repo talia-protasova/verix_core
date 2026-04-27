@@ -35,63 +35,76 @@ export const PulseHexagon: React.FC<GenerativeIconProps> = ({
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        const dpr = window.devicePixelRatio || 1;
-        const center = size / 2;
+        const startAnimation = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const center = size / 2;
 
-        // scale canvas to avoid blur on high-DPI
-        canvas.width = size * dpr;
-        canvas.height = size * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            // scale canvas to avoid blur on high-DPI
+            canvas.width = size * dpr;
+            canvas.height = size * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        let time = 0;
+            let time = 0;
 
-        const drawHex = (radius: number) => {
-            ctx.beginPath();
+            const drawHex = (radius: number) => {
+                ctx.beginPath();
 
-            for (let i = 0; i < HEX_SIDES; i++) {
-                // hexagon step = 60deg
-                const angle = (i * Math.PI) / 3;
+                for (let i = 0; i < HEX_SIDES; i++) {
+                    // hexagon step = 60deg
+                    const angle = (i * Math.PI) / 3;
+                    const x = center + radius * Math.cos(angle);
+                    const y = center + radius * Math.sin(angle);
 
-                const x = center + radius * Math.cos(angle);
-                const y = center + radius * Math.sin(angle);
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
 
-                if (i === 0) ctx.moveTo(x, y);
-                else ctx.lineTo(x, y);
-            }
+                ctx.closePath();
+                ctx.stroke();
+            };
 
-            ctx.closePath();
-            ctx.stroke();
-        };
+            const animate = () => {
+                ctx.clearRect(0, 0, size, size);
 
-        const animate = () => {
-            ctx.clearRect(0, 0, size, size);
+                time += TIME_STEP;
 
-            time += TIME_STEP;
+                for (let i = 0; i < 3; i++) {
+                    // radius = base + sinus wave + layer offset
+                    const radius =
+                        size * BASE_RADIUS +
+                        Math.sin(time - i * PHASE_SHIFT) * (size * WAVE_AMPLITUDE) +
+                        i * (size * RADIUS_OFFSET);
 
-            for (let i = 0; i < 3; i++) {
-                // radius = base + sinus wave + layer offset
-                const radius =
-                    size * BASE_RADIUS +
-                    Math.sin(time - i * PHASE_SHIFT) * (size * WAVE_AMPLITUDE) +
-                    i * (size * RADIUS_OFFSET);
+                    const alpha = 1 - i * 0.3;
 
-                const alpha = 1 - i * 0.3;
+                    ctx.strokeStyle = fadeColor(color, alpha);
+                    ctx.lineWidth = LINE_WIDTH;
 
-                ctx.strokeStyle = fadeColor(color, alpha);
-                ctx.lineWidth = LINE_WIDTH;
+                    drawHex(radius);
+                }
 
-                drawHex(radius);
-            }
+                rafRef.current = requestAnimationFrame(animate);
+            };
 
             rafRef.current = requestAnimationFrame(animate);
         };
 
-        rafRef.current = requestAnimationFrame(animate);
+        // start only when canvas enters viewport
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    startAnimation();
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 },
+        );
+
+        observer.observe(canvas);
 
         return () => {
-            if (rafRef.current !== null) {
-                cancelAnimationFrame(rafRef.current);
-            }
+            observer.disconnect();
+            if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
         };
     }, [size, color, animated]);
 

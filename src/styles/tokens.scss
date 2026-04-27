@@ -26,8 +26,8 @@
     --color-text-error: oklch(49.811% 0.19869 14.298);
 
     // overlays
-    --color-overlay: oklch(11.703% 0.00887 284.935 / 0.9);
-    --color-overlay-soft: oklch(11.703% 0.00887 284.935 / 0.85);
+    --color-overlay: rgba(9, 5, 6, 0.82);
+    --color-overlay-soft: rgba(5, 5, 8, 0.85);
 
     // ================= GRADIENTS =================
     --color-cyan-85: oklch(71.485% 0.12578 215.256 / 0.85);
@@ -121,8 +121,8 @@
 
     // ================= BLUR / OVERLAY =================
     --blur-glass: 4px;
-    --overlay-dark: oklch(0% 0 0 / 0.2);
-    --overlay-dark-heavy: oklch(0% 0 0 / 0.37);
+    --overlay-dark: rgba(0, 0, 0, 0.2);
+    --overlay-dark-heavy: rgba(0, 0, 0, 0.37);
     --blur-header: 8px;
     --blur-mobile-menu: 1.25rem;
 

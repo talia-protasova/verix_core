@@ -31,53 +31,67 @@ export const OrbitConcentric: React.FC<GenerativeIconProps> = ({
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        const dpr = window.devicePixelRatio || 1;
-        const center = size / 2;
-        const radiuses = ORBIT_RADIUS_FACTORS.map((factor) => size * factor);
+        const startAnimation = () => {
+            const dpr = window.devicePixelRatio || 1;
+            const center = size / 2;
+            const radiuses = ORBIT_RADIUS_FACTORS.map((factor) => size * factor);
 
-        // scale canvas for high-DPI screens
-        canvas.width = size * dpr;
-        canvas.height = size * dpr;
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            // scale canvas for high-DPI screens
+            canvas.width = size * dpr;
+            canvas.height = size * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        let angle = 0;
+            let angle = 0;
 
-        const animate = () => {
-            ctx.clearRect(0, 0, size, size);
+            const animate = () => {
+                ctx.clearRect(0, 0, size, size);
 
-            // apply shared stroke settings once per frame
-            ctx.lineWidth = LINE_WIDTH;
-            ctx.setLineDash([size * DASH_RATIO[0], size * DASH_RATIO[1]]);
+                // apply shared stroke settings once per frame
+                ctx.lineWidth = LINE_WIDTH;
+                ctx.setLineDash([size * DASH_RATIO[0], size * DASH_RATIO[1]]);
 
-            radiuses.forEach((radius, index) => {
-                // keep original rotation behavior
-                const currentAngle = angle * (index % 2 === 0 ? 1 : -1.2);
+                radiuses.forEach((radius, index) => {
+                    // keep original rotation behavior
+                    const currentAngle = angle * (index % 2 === 0 ? 1 : -1.2);
 
-                ctx.strokeStyle = fadeColor(color, 0.3 + index * 0.2);
+                    ctx.strokeStyle = fadeColor(color, 0.3 + index * 0.2);
 
-                ctx.beginPath();
-                ctx.ellipse(
-                    center,
-                    center,
-                    radius,
-                    radius * ORBIT_HEIGHT_RATIO,
-                    currentAngle,
-                    0,
-                    Math.PI * 2,
-                );
-                ctx.stroke();
-            });
+                    ctx.beginPath();
+                    ctx.ellipse(
+                        center,
+                        center,
+                        radius,
+                        radius * ORBIT_HEIGHT_RATIO,
+                        currentAngle,
+                        0,
+                        Math.PI * 2,
+                    );
+                    ctx.stroke();
+                });
 
-            angle += ANGLE_STEP;
+                angle += ANGLE_STEP;
+                rafRef.current = requestAnimationFrame(animate);
+            };
+
             rafRef.current = requestAnimationFrame(animate);
         };
 
-        rafRef.current = requestAnimationFrame(animate);
+        // start only when canvas enters viewport
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    startAnimation();
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 },
+        );
+
+        observer.observe(canvas);
 
         return () => {
-            if (rafRef.current !== null) {
-                cancelAnimationFrame(rafRef.current);
-            }
+            observer.disconnect();
+            if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
         };
     }, [size, color, animated]);
 

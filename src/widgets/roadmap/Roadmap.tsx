@@ -45,31 +45,30 @@ export const Roadmap = () => {
 
         // calculates SVG path based on current layout
         const calculatePath = () => {
-            const wrapper = wrapperRef.current;
-            const cards = stepRefs.current.filter(Boolean) as HTMLElement[];
+            requestAnimationFrame(() => {
+                const wrapper = wrapperRef.current;
+                const cards = stepRefs.current.filter(Boolean) as HTMLElement[];
 
-            if (!wrapper || !cards.length) {
-                return;
-            }
+                if (!wrapper || !cards.length) {
+                    return;
+                }
 
-            const wrapperRect = wrapper.getBoundingClientRect();
+                const wrapperRect = wrapper.getBoundingClientRect();
 
-            const width = wrapperRect.width;
-            const height = wrapperRect.height;
-            const centerX = width / 2;
+                const width = wrapperRect.width;
+                const height = wrapperRect.height;
+                const centerX = width / 2;
 
-            const isMobile = window.innerWidth < 1024;
+                const isMobile = window.innerWidth < 1024;
 
-            // update SVG viewport to match container
-            setViewBox(`0 0 ${width} ${height}`);
+                setViewBox(`0 0 ${width} ${height}`);
 
-            // get anchor points for each card
-            const points = getRoadmapPoints(cards, wrapperRect, centerX, isMobile);
+                const points = getRoadmapPoints(cards, wrapperRect, centerX, isMobile);
 
-            // build path string (mobile or desktop variant)
-            const path = buildRoadmapPath(points, centerX, width, isMobile);
+                const path = buildRoadmapPath(points, centerX, width, isMobile);
 
-            setSvgPath(path);
+                setSvgPath(path);
+            });
         };
 
         // initial calculation

@@ -55,45 +55,63 @@ export const FloatingCubes: React.FC<GenerativeIconProps> = ({
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
         let rafId = 0;
-        let time = 0;
 
-        const drawCube = (cube: Cube, y: number) => {
-            // draws diamond shape for isometric cube look
-            ctx.beginPath();
-            ctx.moveTo(cube.x, y - cube.size / 2);
-            ctx.lineTo(cube.x + cube.size, y);
-            ctx.lineTo(cube.x, y + cube.size / 2);
-            ctx.lineTo(cube.x - cube.size, y);
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
-        };
+        const startAnimation = () => {
+            let time = 0;
 
-        const animate = () => {
-            // clears previous frame before redraw
-            ctx.clearRect(0, 0, size, size);
+            const drawCube = (cube: Cube, y: number) => {
+                // draws diamond shape for isometric cube look
+                ctx.beginPath();
+                ctx.moveTo(cube.x, y - cube.size / 2);
+                ctx.lineTo(cube.x + cube.size, y);
+                ctx.lineTo(cube.x, y + cube.size / 2);
+                ctx.lineTo(cube.x - cube.size, y);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+            };
 
-            // advances shared animation time
-            time += 0.02;
+            const animate = () => {
+                // clears previous frame before redraw
+                ctx.clearRect(0, 0, size, size);
 
-            ctx.fillStyle = fadeColor(color, 0.2);
-            ctx.strokeStyle = fadeColor(color, 1);
-            ctx.lineWidth = 1;
+                // advances shared animation time
+                time += 0.02;
 
-            cubesRef.current.forEach((cube) => {
-                // shifts each cube vertically using sine wave
-                const y = cube.baseY + Math.sin(time + cube.offset) * (size * 0.18);
+                ctx.fillStyle = fadeColor(color, 0.2);
+                ctx.strokeStyle = fadeColor(color, 1);
+                ctx.lineWidth = 1;
 
-                drawCube(cube, y);
-            });
+                cubesRef.current.forEach((cube) => {
+                    // shifts each cube vertically using sine wave
+                    const y = cube.baseY + Math.sin(time + cube.offset) * (size * 0.18);
+
+                    drawCube(cube, y);
+                });
+
+                rafId = requestAnimationFrame(animate);
+            };
 
             rafId = requestAnimationFrame(animate);
         };
 
-        rafId = requestAnimationFrame(animate);
+        // start only when canvas enters viewport
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    startAnimation();
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 },
+        );
 
-        // stops animation on unmount
-        return () => cancelAnimationFrame(rafId);
+        observer.observe(canvas);
+
+        return () => {
+            observer.disconnect();
+            cancelAnimationFrame(rafId);
+        };
     }, [size, color, animated]);
 
     return (

@@ -12,10 +12,22 @@
     padding-block: var(--header-padding-y);
     padding-inline: var(--header-padding-x);
 
-    background: var(--overlay-dark);
-    backdrop-filter: blur(var(--blur-header));
-    -webkit-backdrop-filter: blur(var(--blur-header));
+    background: transparent;
     border-bottom: var(--border-header-bottom);
+
+    isolation: isolate;
+
+    &::before {
+        content: '';
+
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(var(--blur-header));
+        transform: translateZ(0);
+    }
 }
 
 .header__container {
