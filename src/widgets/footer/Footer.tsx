@@ -1,6 +1,7 @@
 import './footer.scss';
 import { SocialIcon } from '../../shared/ui/icon/SocialIcon';
 import { SOCIAL_LINKS, FOOTER_LINKS, FOOTER_LEGAL } from '../../app/core/data';
+import { Particles } from '../../shared/lib/particles/Particles';
 
 export const Footer = () => {
     return (
@@ -67,6 +68,7 @@ export const Footer = () => {
                     </ul>
                 </div>
             </div>
+            <Particles />
         </footer>
     );
 };

@@ -17,9 +17,19 @@
     line-height: var(--leading-tight);
     text-align: center;
     letter-spacing: -0.02em;
-
     color: var(--color-white);
 }
 .section-title--accent {
     display: block;
+}
+.form-error {
+    position: absolute;
+    inset-inline-start: 0;
+    inset-block-end: calc(-1 * var(--space-5));
+
+    font-size: var(--font-caption);
+    color: var(--color-text-error);
+}
+.form-input.form-input--error {
+    border: var(--border-error-sm);
 }

@@ -15,6 +15,7 @@
     // borders
     --color-border: oklch(100% 0.00011 271.152 / 0.07);
     --color-border-bright: rgba(255, 255, 255, 0.15);
+    --color-border-error: oklch(49.811% 0.19869 14.298);
 
     // text
     --color-white: oklch(100% 0.00011 271.152);
@@ -22,6 +23,7 @@
     --color-white-60: oklch(100% 0.00011 271.152 / 0.6);
     --color-white-30: oklch(100% 0.00011 271.152 / 0.3);
     --color-text-muted: oklch(100% 0.00011 271.152 / 0.8);
+    --color-text-error: oklch(49.811% 0.19869 14.298);
 
     // overlays
     --color-overlay: oklch(11.703% 0.00887 284.935 / 0.9);
@@ -127,6 +129,8 @@
     // ================= BORDERS =================
     --border-glass: 1px solid oklch(100% 0.00011 271.152 / 0.1);
     --border-bright-sm: 1px solid var(--color-border-bright);
+    --border-error-sm: 1px solid var(--color-border-error);
+
     --border-header-bottom: 1px solid oklch(100% 0.00011 271.152 / 0.05);
 
     // ================= SHADOWS =================
