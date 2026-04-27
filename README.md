@@ -2,8 +2,8 @@
 
 > React · TypeScript · Vite · SCSS
 
-[![React](https://img.shields.io/badge/React-18-61DAFB?style=flat-square&logo=react)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6-3178C6?style=flat-square&logo=typescript)](https://typescriptlang.org)
 [![Vite](https://img.shields.io/badge/Build-Vite-646CFF?style=flat-square&logo=vite)](https://vitejs.dev)
 [![SCSS](https://img.shields.io/badge/Styles-SCSS%20%2B%20BEM-CC6699?style=flat-square&logo=sass)](https://sass-lang.com)
 [![Lighthouse](https://img.shields.io/badge/Lighthouse-98%2F100-00C853?style=flat-square)](https://talia-protasova.github.io/verix_core/)
