@@ -32,7 +32,7 @@ Core Web Vitals on production build: FCP 0.5s · LCP 0.8s · TBT 0ms · CLS 0.00
 
 | Layer | Technology |
 |-------|-----------|
-| Framework | React 18 + TypeScript |
+| Framework | React 19 + TypeScript |
 | Build tool | Vite |
 | Styles | SCSS with ITCSS architecture and BEM methodology |
 | Theming | CSS custom properties (design token system) |
